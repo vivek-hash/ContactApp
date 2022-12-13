@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" ></script>
+</head>
+<body>
+<h3>Welcome to Student Register / Edit Page</h3>
+
+<form th:action="@{/employee/save}" method="post" th:object="${employee}">
+<pre>
+ID   : <input type="text" th:field="*{empId}"/>
+NAME : <input type="text" th:field="*{empName}"/>
+EMAIL: <input type="text"  th:field="*{email}"/> <span id="emailError" ></span>
+  SAL: <input type="text" th:field="*{empSal}">
+DEPT : <select th:field="*{dept}">
+		<option value="">--SELECT--</option>
+		<option value="DEV">DEV</option>
+		<option value="QA">QA</option>
+		<option value="BA">BA</option>
+		<option value="MGR">MGR</option>
+		</select>
+
+		<input type="submit" value="SUBMIT"/>
+</pre>
+</form>
+<span th:text="${message}"></span>
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#email").change(function(){
+		$.ajax({
+			url:'checkEmail',
+			data: {'email':$("#email").val()},
+			success:function(resTxt){
+			
+					$("#emailError").text(restxt);
+			}
+		})
+	});
+});
+</script>
+
+</body>
+</html>

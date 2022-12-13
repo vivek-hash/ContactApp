@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+
+<link rel="stylesheet" th:href="@{/css/myui.css}">
+
+</head>
+<body>
+<h3>Welcome to Employee Data</h3>
+
+<table border="1">
+<tr>
+	<th>ID</th>
+	<th>NAME</th>
+	<th>EMAIL</th>
+	<th>DEPT</th>
+	<th>SALARY</th>
+	<th>HRA</th>
+	<th>DA</th>
+	<th>OPERATIONS</th>
+</tr>
+
+<tr th:each="ob:${list}">
+	<td th:text="${ob.empId}"></td>
+	<td th:text="${ob.empName}"></td>
+	<td th:text="${ob.email}"></td>
+	<td th:text="${ob.dept}"></td>
+	<td th:text="${ob.empSal}"></td>
+	<td th:text="${ob.hra}"></td>
+	<td th:text="${ob.da}"></td>
+	<td>
+	<!-- URL Rewriting -->
+	<a th:href="@{/employee/delete(empId=${ob.empId})}">DELETE</a>
+	<span>|</span>
+	<a th:href="@{/employee/edit(empId=${ob.empId})}">EDIT</a>
+	
+	</td>
+</tr>
+</table>
+<hr/>
+<span th:if="${!page.isFirst()}">
+<a th:href="@{/employee/all(page=0)}">First</a>
+</span>
+
+<th:span th:if="${page.hasPrevious()}">
+<a th:href="@{/employee/all(page=${page.number-1})}">Previous</a>
+</th:span>
+
+<th:block th:each="i:${#numbers.sequence(0,page.totalPages-1)}">
+<a th:href="@{/employee/all(page=${i})}">[[${i}+1]]</a>
+</th:block>
+
+<span th:if="${page.hasNext()}">
+<a th:href="@{/employee/all(page=${page.number+1})}">Next</a>
+</span>
+
+<span th:if="${! page.isLast()}">
+<a th:href="@{/employee/all(page=${page.TotalPages-1})}">Last</a>
+</span>
+
+</body>
+</html>
